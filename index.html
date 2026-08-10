@@ -361,7 +361,7 @@ a { color: inherit; }
 
 section { padding-block: clamp(4.5rem, 11vh, 8rem); scroll-margin-top: 1.5rem; }
 /* las secciones bajo el pliegue no se maquetan hasta acercarse al viewport */
-#skills, #blandas, #formacion, #idiomas, #contacto {
+#proyectos, #skills, #blandas, #formacion, #idiomas, #contacto {
   content-visibility: auto;
   contain-intrinsic-size: auto 720px;
 }
@@ -597,6 +597,48 @@ section + section { border-top: 1px solid var(--line-soft); }
 }
 
 /* ============================================================
+   PROYECTOS
+   Fichas de trabajo: cada una lleva su dato duro arriba (el número
+   que un revisor puede verificar) y los enlaces reales abajo.
+   ============================================================ */
+.proj-grid { display: grid; gap: 1px; background: var(--line-soft); border: 1px solid var(--line-soft); }
+@media (min-width: 880px) { .proj-grid { grid-template-columns: repeat(2, 1fr); } }
+.proj {
+  background: var(--paper); padding: 1.5rem 1.6rem;
+  display: flex; flex-direction: column; gap: .8rem;
+}
+.proj-top { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+.proj-metric {
+  font-family: var(--font-mono); font-size: var(--s-1);
+  letter-spacing: .015em; color: var(--signal); white-space: nowrap;
+}
+.proj h3 { font-size: var(--s-5); letter-spacing: -.012em; }
+.proj > p { font-size: var(--s-3); color: var(--ink-2); max-width: 46ch; text-wrap: pretty; }
+.proj .tags { margin-top: auto; padding-top: .3rem; }
+.proj-links { display: flex; flex-wrap: wrap; gap: 1.1rem; padding-top: .25rem; }
+.proj-links a {
+  font-family: var(--font-mono); font-size: var(--s-1); letter-spacing: .015em;
+  color: var(--accent); text-decoration: none;
+  border-bottom: 1px solid transparent; padding-bottom: 1px;
+  transition: border-color .16s var(--ease);
+}
+.proj-links a:hover { border-bottom-color: currentColor; }
+.proj-links a.live::before {
+  content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--signal); margin-right: .45rem; vertical-align: middle;
+}
+.proj-more {
+  display: flex; justify-content: flex-end; padding-top: 1.1rem;
+}
+.proj-more a {
+  font-family: var(--font-mono); font-size: var(--s-1); letter-spacing: .045em;
+  text-transform: uppercase; color: var(--muted); text-decoration: none;
+  border-bottom: 1px solid var(--line); padding-bottom: 2px;
+  transition: color .16s var(--ease), border-color .16s var(--ease);
+}
+.proj-more a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* ============================================================
    SKILLS
    ============================================================ */
 .skills { display: flex; flex-direction: column; gap: 0; border-top: 1px solid var(--line-soft); }
@@ -756,7 +798,7 @@ section + section { border-top: 1px solid var(--line-soft); }
   .wrap { padding-left: 0; width: 100%; }
   section { padding-block: 1.2rem; break-inside: avoid; }
   /* content-visibility ocultaría estas secciones al imprimir */
-  #skills, #blandas, #formacion, #idiomas, #contacto { content-visibility: visible; }
+  #proyectos, #skills, #blandas, #formacion, #idiomas, #contacto { content-visibility: visible; }
   .portrait { width: 150px; }
 }
 </style>
@@ -792,11 +834,12 @@ section + section { border-top: 1px solid var(--line-soft); }
   <a href="#inicio" title="Inicio"><span class="idx">01</span><span class="bar"></span><span class="lbl">Inicio</span></a>
   <a href="#perfil" title="Perfil"><span class="idx">02</span><span class="bar"></span><span class="lbl">Perfil</span></a>
   <a href="#trayectoria" title="Trayectoria"><span class="idx">03</span><span class="bar"></span><span class="lbl">Trayectoria</span></a>
-  <a href="#skills" title="Skills"><span class="idx">04</span><span class="bar"></span><span class="lbl">Skills</span></a>
-  <a href="#blandas" title="Habilidades blandas"><span class="idx">05</span><span class="bar"></span><span class="lbl">Blandas</span></a>
-  <a href="#formacion" title="Formación"><span class="idx">06</span><span class="bar"></span><span class="lbl">Formación</span></a>
-  <a href="#idiomas" title="Idiomas"><span class="idx">07</span><span class="bar"></span><span class="lbl">Idiomas</span></a>
-  <a href="#contacto" title="Contacto"><span class="idx">08</span><span class="bar"></span><span class="lbl">Contacto</span></a>
+  <a href="#proyectos" title="Proyectos"><span class="idx">04</span><span class="bar"></span><span class="lbl">Proyectos</span></a>
+  <a href="#skills" title="Skills"><span class="idx">05</span><span class="bar"></span><span class="lbl">Skills</span></a>
+  <a href="#blandas" title="Habilidades blandas"><span class="idx">06</span><span class="bar"></span><span class="lbl">Blandas</span></a>
+  <a href="#formacion" title="Formación"><span class="idx">07</span><span class="bar"></span><span class="lbl">Formación</span></a>
+  <a href="#idiomas" title="Idiomas"><span class="idx">08</span><span class="bar"></span><span class="lbl">Idiomas</span></a>
+  <a href="#contacto" title="Contacto"><span class="idx">09</span><span class="bar"></span><span class="lbl">Contacto</span></a>
 </nav>
 
 <main class="wrap" id="contenido">
@@ -966,17 +1009,126 @@ section + section { border-top: 1px solid var(--line-soft); }
     </div>
   </section>
 
-  <!-- ===================== 04 · SKILLS ===================== -->
+  <!-- ===================== 04 · PROYECTOS ===================== -->
+  <section id="proyectos">
+    <div class="sec-head rv">
+      <p class="eyebrow">04 — Proyectos</p>
+      <h2>Código que se puede abrir.</h2>
+      <p class="lede">Seis construidos de cero. Dos con demo en vivo y dos con integración continua corriendo pruebas en cada commit.</p>
+    </div>
+
+    <div class="proj-grid">
+
+      <article class="proj rv">
+        <div class="proj-top">
+          <h3>Nodo ERP</h3>
+          <span class="proj-metric">CI activo</span>
+        </div>
+        <p>Sistema ERP y POS para PyMEs mexicanas: ventas, inventario, RRHH, cobranza, facturación CFDI e inteligencia de negocio. Arquitectura limpia sobre contenedores.</p>
+        <div class="tags">
+          <span class="tag">FastAPI</span><span class="tag">React 19</span><span class="tag">PostgreSQL 15</span>
+          <span class="tag">Docker Compose</span><span class="tag">Metabase</span><span class="tag">Clean Architecture</span>
+        </div>
+        <div class="proj-links">
+          <a href="https://github.com/facu100201/Nodo-ERP" target="_blank" rel="noopener">Código ↗</a>
+        </div>
+      </article>
+
+      <article class="proj rv rv-d1">
+        <div class="proj-top">
+          <h3>Lumina LMS</h3>
+          <span class="proj-metric">41 pruebas E2E</span>
+        </div>
+        <p>Plataforma de gestión de aprendizaje hecha desde cero, sin framework de front-end. Control de acceso por roles aplicado en cliente y servidor, y métricas en tiempo real por Server-Sent Events.</p>
+        <div class="tags">
+          <span class="tag">Node.js</span><span class="tag">Express</span><span class="tag">Vanilla JS</span>
+          <span class="tag">SQLite</span><span class="tag">Playwright</span><span class="tag">RBAC</span><span class="tag">SSE</span>
+        </div>
+        <div class="proj-links">
+          <a class="live" href="https://facu100201.github.io/Lumina-LMS/html/login.html" target="_blank" rel="noopener">Demo en vivo ↗</a>
+          <a href="https://github.com/facu100201/Lumina-LMS" target="_blank" rel="noopener">Código ↗</a>
+        </div>
+      </article>
+
+      <article class="proj rv rv-d1">
+        <div class="proj-top">
+          <h3>RapidRelief AI</h3>
+          <span class="proj-metric">90.6 % accuracy</span>
+        </div>
+        <p>Visión por computadora para clasificar donaciones textiles en centros de acopio humanitario y quitar el cuello de botella logístico. Proyecto académico en equipo de tres, Universidad Simón Bolívar.</p>
+        <div class="tags">
+          <span class="tag">Python</span><span class="tag">Computer Vision</span>
+          <span class="tag">Jupyter</span><span class="tag">Streamlit</span><span class="tag">TTA</span>
+        </div>
+        <div class="proj-links">
+          <a class="live" href="https://rapidreliefai.streamlit.app" target="_blank" rel="noopener">Demo en vivo ↗</a>
+          <a href="https://github.com/facu100201/RapidReliefAI" target="_blank" rel="noopener">Código ↗</a>
+        </div>
+      </article>
+
+      <article class="proj rv rv-d2">
+        <div class="proj-top">
+          <h3>Esfero Marketplace</h3>
+          <span class="proj-metric">Pagos reales</span>
+        </div>
+        <p>Marketplace C2C donde compradores y vendedores publican, buscan y transaccionan. Checkout con PayPal Sandbox, mensajería interna, notificaciones en tiempo real y paginación AJAX sin recarga.</p>
+        <div class="tags">
+          <span class="tag">PHP 8</span><span class="tag">MySQL</span><span class="tag">Docker</span>
+          <span class="tag">PayPal API</span><span class="tag">AJAX</span>
+        </div>
+        <div class="proj-links">
+          <a href="https://github.com/facu100201/Esfero_eCommerce" target="_blank" rel="noopener">Código ↗</a>
+        </div>
+      </article>
+
+      <article class="proj rv rv-d2">
+        <div class="proj-top">
+          <h3>TechVault CRM</h3>
+          <span class="proj-metric">87 % TypeScript</span>
+        </div>
+        <p>Plataforma de gestión de clientes en monorepo: front-end, API tipada y base de datos versionada por migraciones, cada capa en su propio paquete.</p>
+        <div class="tags">
+          <span class="tag">React 18</span><span class="tag">TypeScript</span><span class="tag">Vite</span>
+          <span class="tag">Prisma ORM</span><span class="tag">PostgreSQL 15</span><span class="tag">Tailwind</span>
+        </div>
+        <div class="proj-links">
+          <a href="https://github.com/facu100201/CRM_Synap" target="_blank" rel="noopener">Código ↗</a>
+        </div>
+      </article>
+
+      <article class="proj rv rv-d3">
+        <div class="proj-top">
+          <h3>Boletix</h3>
+          <span class="proj-metric">Cero dependencias</span>
+        </div>
+        <p>Boletera para espectáculos de mediana escala en la Ciudad de México. Prototipo navegable de principio a fin, sin build ni base de datos: QR dinámico, reventa topada y sin cargos ocultos.</p>
+        <div class="tags">
+          <span class="tag">JavaScript</span><span class="tag">HTML</span>
+          <span class="tag">CSS</span><span class="tag">localStorage</span>
+        </div>
+        <div class="proj-links">
+          <a href="https://github.com/facu100201/Boletix" target="_blank" rel="noopener">Código ↗</a>
+        </div>
+      </article>
+
+    </div>
+
+    <p class="proj-more">
+      <a href="https://github.com/facu100201?tab=repositories" target="_blank" rel="noopener">Todos los repositorios ↗</a>
+    </p>
+  </section>
+
+  <!-- ===================== 05 · SKILLS ===================== -->
   <section id="skills">
     <div class="sec-head rv">
-      <p class="eyebrow">04 — Habilidades técnicas</p>
+      <p class="eyebrow">05 — Habilidades técnicas</p>
       <h2>Stack de trabajo.</h2>
       <p class="lede">Agrupado por capa, no por moda. Todo lo listado se usó en un proyecto real de los de arriba.</p>
     </div>
 
     <div class="skills">
       <div class="skill-row rv">
-        <div class="skill-key"><span class="num">4.1</span><h3>Lenguajes</h3></div>
+        <div class="skill-key"><span class="num">5.1</span><h3>Lenguajes</h3></div>
         <div class="skill-set">
           <span class="chip">TypeScript</span><span class="chip">JavaScript</span>
           <span class="chip">Python</span><span class="chip">SQL</span>
@@ -984,7 +1136,7 @@ section + section { border-top: 1px solid var(--line-soft); }
       </div>
 
       <div class="skill-row rv">
-        <div class="skill-key"><span class="num">4.2</span><h3>Frontend &amp; UI</h3></div>
+        <div class="skill-key"><span class="num">5.2</span><h3>Frontend &amp; UI</h3></div>
         <div class="skill-set">
           <span class="chip">HTML5</span><span class="chip">CSS3</span><span class="chip">Tailwind</span>
           <span class="chip">Bootstrap</span><span class="chip">React</span><span class="chip">Next.js 15</span>
@@ -994,7 +1146,7 @@ section + section { border-top: 1px solid var(--line-soft); }
       </div>
 
       <div class="skill-row rv">
-        <div class="skill-key"><span class="num">4.3</span><h3>Backend &amp; Base de datos</h3></div>
+        <div class="skill-key"><span class="num">5.3</span><h3>Backend &amp; Base de datos</h3></div>
         <div class="skill-set">
           <span class="chip">Node.js</span><span class="chip">tRPC</span><span class="chip">REST APIs</span>
           <span class="chip">PostgreSQL</span><span class="chip">Drizzle ORM</span><span class="chip">FastAPI</span>
@@ -1004,7 +1156,7 @@ section + section { border-top: 1px solid var(--line-soft); }
       </div>
 
       <div class="skill-row rv">
-        <div class="skill-key"><span class="num">4.4</span><h3>Herramientas &amp; DevOps</h3></div>
+        <div class="skill-key"><span class="num">5.4</span><h3>Herramientas &amp; DevOps</h3></div>
         <div class="skill-set">
           <span class="chip">Git</span><span class="chip">Docker</span><span class="chip">Docker Compose</span>
           <span class="chip">Turborepo</span><span class="chip">Playwright</span>
@@ -1013,7 +1165,7 @@ section + section { border-top: 1px solid var(--line-soft); }
       </div>
 
       <div class="skill-row rv">
-        <div class="skill-key"><span class="num">4.5</span><h3>Redes e Infraestructura</h3></div>
+        <div class="skill-key"><span class="num">5.5</span><h3>Redes e Infraestructura</h3></div>
         <div class="skill-set">
           <span class="chip">Diseño de topologías físicas y lógicas</span>
           <span class="chip">Cisco Packet Tracer</span>
@@ -1022,57 +1174,57 @@ section + section { border-top: 1px solid var(--line-soft); }
     </div>
   </section>
 
-  <!-- ===================== 05 · HABILIDADES BLANDAS ===================== -->
+  <!-- ===================== 06 · HABILIDADES BLANDAS ===================== -->
   <section id="blandas">
     <div class="sec-head rv">
-      <p class="eyebrow">05 — Habilidades blandas</p>
+      <p class="eyebrow">06 — Habilidades blandas</p>
       <h2>Cómo trabajo.</h2>
       <p class="lede">Cada rasgo va con la evidencia que lo sostiene. Sin adjetivos sueltos.</p>
     </div>
 
     <div class="soft-grid">
       <article class="soft rv">
-        <span class="num">5.1</span>
+        <span class="num">6.1</span>
         <h3>Adaptación rápida</h3>
         <p>Cuatro sectores en tres años: manufactura industrial, edtech, e-commerce médico y SaaS.</p>
       </article>
 
       <article class="soft rv rv-d1">
-        <span class="num">5.2</span>
+        <span class="num">6.2</span>
         <h3>Rigor de verificación</h3>
         <p>Aseguramiento de calidad bajo normativa europea, sobre componentes críticos para Danfoss.</p>
       </article>
 
       <article class="soft rv rv-d2">
-        <span class="num">5.3</span>
+        <span class="num">6.3</span>
         <h3>Visión integral de producto</h3>
         <p>De la interfaz a la base de datos, los pagos y el monitoreo en producción.</p>
       </article>
 
       <article class="soft rv rv-d1">
-        <span class="num">5.4</span>
+        <span class="num">6.4</span>
         <h3>Resolución de problemas complejos</h3>
         <p>Método traído del Diseño Industrial y aplicado después a ingeniería QA en Europa.</p>
       </article>
 
       <article class="soft rv rv-d2">
-        <span class="num">5.5</span>
+        <span class="num">6.5</span>
         <h3>Trabajo ágil</h3>
         <p>Monorepo, pruebas E2E y despliegues automatizados como práctica diaria.</p>
       </article>
 
       <article class="soft rv rv-d3">
-        <span class="num">5.6</span>
+        <span class="num">6.6</span>
         <h3>Comunicación internacional</h3>
         <p>Cinco idiomas, inglés C1 y una temporada trabajando en la industria alemana.</p>
       </article>
     </div>
   </section>
 
-  <!-- ===================== 06 · FORMACIÓN ===================== -->
+  <!-- ===================== 07 · FORMACIÓN ===================== -->
   <section id="formacion">
     <div class="sec-head rv">
-      <p class="eyebrow">06 — Formación</p>
+      <p class="eyebrow">07 — Formación</p>
       <h2>Educación y certificaciones.</h2>
     </div>
 
@@ -1115,10 +1267,10 @@ section + section { border-top: 1px solid var(--line-soft); }
     </div>
   </section>
 
-  <!-- ===================== 07 · IDIOMAS ===================== -->
+  <!-- ===================== 08 · IDIOMAS ===================== -->
   <section id="idiomas">
     <div class="sec-head rv">
-      <p class="eyebrow">07 — Idiomas</p>
+      <p class="eyebrow">08 — Idiomas</p>
       <h2>Cinco idiomas, un mismo criterio.</h2>
       <p class="lede">Escala del Marco Común Europeo de Referencia (MCER).</p>
     </div>
@@ -1153,10 +1305,10 @@ section + section { border-top: 1px solid var(--line-soft); }
     </div>
   </section>
 
-  <!-- ===================== 08 · CONTACTO ===================== -->
+  <!-- ===================== 09 · CONTACTO ===================== -->
   <section id="contacto">
     <div class="sec-head rv">
-      <p class="eyebrow">08 — Contacto</p>
+      <p class="eyebrow">09 — Contacto</p>
       <h2>Hablemos.</h2>
       <p class="lede">Abierto a roles full-stack, front-end y colaboraciones freelance. Respondo en español o inglés.</p>
     </div>
